@@ -51,7 +51,8 @@ app.use('/api', orderRoutes);
 app.get('/', (req, res)=> {
   res.send("db is working!!");
 })
+const PORT = process.env.PORT || 4000;
 
-app.listen(process.env.PORT, () => {
-    console.log(`Server Started Sucessfully on ${process.env.PORT}`)
+app.listen(PORT, () => {
+    console.log(`Server Started Sucessfully on ${PORT}`)
 });
