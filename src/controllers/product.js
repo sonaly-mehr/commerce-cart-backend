@@ -104,3 +104,17 @@ exports.singleProduct = async (req, res) => {
     });
 
   };
+
+  exports.searchProduct = async (req, res) => {
+    // const key = req.params.key;
+    const data = await Product.find({ 
+      "$or":[
+        // {"_id":{$regex: ObjectId(req.params.key)}},
+        {"name":{$regex:req.params.key}},
+        {"brand":{$regex:req.params.key}},
+        {"category":{$regex:req.params.key}},
+    ]
+     })
+     res.send(data);
+
+  }

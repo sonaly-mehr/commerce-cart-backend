@@ -1,5 +1,5 @@
 const express = require('express');
-const { createProduct, getProducts, singleProduct, deleteProduct, updateProduct } = require('../controllers/product');
+const { createProduct, getProducts, singleProduct, deleteProduct, updateProduct, searchProduct } = require('../controllers/product');
 const router = express.Router();
 // const { requireSignin, adminMiddleware } = require('../common-middleware');
 // const { addCategory, getCategories } = require('../controllers/category');
@@ -26,6 +26,7 @@ router.get('/admin/product/list', getProducts);
 router.get('/product/:id', singleProduct)
 router.put('/product/update/:id', updateProduct);
 router.delete('/product/delete/:id', deleteProduct);
-
+router.get('/search/product/:key', searchProduct)
+router.get('/admin/search/product/:key', searchProduct)
 // router.get('/category/list', getCategories);
 module.exports = router;

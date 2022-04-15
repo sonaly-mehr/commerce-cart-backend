@@ -42,7 +42,7 @@ exports.createOrder = (req, res) => {
 };
 
 exports.getOrders = (req, res) => {
-  Order.find({ email: (req.params.email)})
+  Order.find({email:(req.query.email)})
     // .select("_id paymentStatus paymentType orderStatus items")
     // .populate("items.productId", "_id name productPictures")
     .exec((error, orders) => {
@@ -52,3 +52,16 @@ exports.getOrders = (req, res) => {
       }
     });
 };
+
+
+// exports.getOrders = (req, res) => {
+//   Order.find({ user: req.user._id })
+//     .select("_id fullName address paymentId product")
+//     .populate("product.productId", "_id name productPictures")
+//     .exec((error, orders) => {
+//       if (error) return res.status(400).json({ error });
+//       if (orders) {
+//         res.status(200).json({ orders });
+//       }
+//     });
+// };

@@ -1,5 +1,5 @@
 const User = require('../models/user');
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcrypt');
 var ObjectId = require('mongodb').ObjectId;
 
 // const generateJwtToken = (_id, role) => {
@@ -138,3 +138,69 @@ exports.getUsers = async (req, res) => {
     });
 
   };
+
+  exports.getSingleUser = async (req, res) => {
+    // const products = await Product.find()
+    // .exec();
+    // res.status(200).json(products);
+
+    const id = ObjectId(req.params.id);
+    const user = await User.find({ _id: id })
+    .exec();
+    res.status(200).json(user);
+
+  }
+
+  exports.updateUser = (req, res) => {
+    User.findOne({ _id: ObjectId(req.params.id) }).exec((error, result) => {
+      if (error) return res.status(400).json({ error });
+        else{
+          if (!result) {
+            res.status(404).send();
+          }
+          else{
+            if(req.body.firstName){
+              result.firstName= req.body.firstName;
+            }
+            if(req.body.lastName){
+              result.lastName= req.body.lastName;
+            }
+            if(req.body.email){
+              result.email= req.body.email;
+            }
+            if(req.body.password){
+              result.password= req.body.password;
+            }
+            if(req.body.contactNumber){
+              result.contactNumber= req.body.contactNumber;
+            }
+            // if(req.body.category){
+            //   result.category= req.body.category;
+            // }
+          }
+        }
+        result.save(function(err, updateResult) {
+          if(err){
+            console.log(err);
+            res.status(500).send();
+          }
+          else{
+            res.send(updateResult);
+          }
+        })
+    });
+
+  };
+
+  exports.searchUser = async (req, res) => {
+    // const key = req.params.key;
+    const data = await User.find({ 
+      "$or":[
+        {"firstName":{$regex:req.params.key}},
+        {"lastName":{$regex:req.params.key}},
+        {"email":{$regex:req.params.key}}
+    ]
+     })
+     res.send(data);
+
+  }
