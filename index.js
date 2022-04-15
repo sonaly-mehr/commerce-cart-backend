@@ -13,9 +13,9 @@ const url = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@clu
 // const categoryRoutes = require('./routes/category')
 // const cartRoutes = require('./routes/cart')
 
-const productRoutes = require('./routes/product')
-const userRoutes = require('./routes/user')
-const orderRoutes= require('./routes/order')
+const productRoutes = require('./src/routes/product')
+const userRoutes = require('./src/routes/user')
+const orderRoutes= require('./src/routes/order')
 
 //Database Connection
 
@@ -34,7 +34,7 @@ mongoose.connect(url,
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
-app.use("/public", express.static(path.join(__dirname, "uploads")));
+app.use("/public", express.static(path.join(__dirname, "./src/uploads")));
 app.use('/api', productRoutes);
 app.use('/api', userRoutes);
 app.use('/api', orderRoutes);
